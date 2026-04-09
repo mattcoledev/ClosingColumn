@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local project files
+.claude/
+app-temp/
+design-system/
+docs_content.txt
+*.docx
