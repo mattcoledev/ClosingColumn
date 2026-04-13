@@ -1,6 +1,8 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY)
+}
 
 const FROM = process.env.RESEND_FROM ?? 'The Closing Column <onboarding@resend.dev>'
 const ADMIN = process.env.ADMIN_EMAIL ?? ''
@@ -24,7 +26,7 @@ export async function sendBuyerConfirmation(meta: Record<string, string>) {
   const title     = meta.articleTitle ?? '(untitled)'
   const turnaround = TURNAROUND[pkg] ?? '5 business days'
 
-  return resend.emails.send({
+  return getResend().emails.send({
     from:    FROM,
     to:      meta.contactEmail,
     subject: 'Your guest post submission is confirmed — The Closing Column',
@@ -74,7 +76,7 @@ export async function sendBuyerConfirmation(meta: Record<string, string>) {
 export async function sendAdminNotification(meta: Record<string, string>, amountTotal: number | null) {
   const amount = amountTotal ? `$${(amountTotal / 100).toFixed(2)}` : '—'
 
-  return resend.emails.send({
+  return getResend().emails.send({
     from:    FROM,
     to:      ADMIN,
     subject: `New paid submission: ${meta.articleTitle ?? '(untitled)'} [${meta.package}]`,
