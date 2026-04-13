@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { createCheckoutSession } from '@/app/actions/checkout'
 
 export const metadata: Metadata = {
   title: 'Pricing & Submit',
@@ -188,7 +189,7 @@ export default function PricingPage() {
             Complete all required fields. Payment is processed at submission via Stripe. You&apos;ll receive a confirmation email within minutes.
           </p>
 
-          <form className="space-y-6" action="#" method="POST" aria-label="Guest post submission form">
+          <form className="space-y-6" action={createCheckoutSession} aria-label="Guest post submission form">
             {/* Package selection (radio — mirrors the cards above) */}
             <fieldset>
               <legend className="block text-slate-900 font-sans font-semibold text-sm mb-3">
@@ -206,6 +207,7 @@ export default function PricingPage() {
                       id={`pkg-${pkg.value}`}
                       name="package"
                       value={pkg.value}
+                      defaultChecked={pkg.highlight}
                       className="accent-amber-600 cursor-pointer"
                     />
                     <div>
@@ -366,7 +368,7 @@ export default function PricingPage() {
                 Continue to Payment &rarr;
               </button>
               <p className="text-slate-400 text-xs font-sans mt-3">
-                Secure payment powered by Stripe. You&apos;ll receive a confirmation email within minutes.
+                Secure payment powered by Stripe. You&apos;ll be redirected to Stripe Checkout to complete payment.
               </p>
             </div>
           </form>

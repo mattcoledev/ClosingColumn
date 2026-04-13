@@ -7,7 +7,7 @@ interface Article {
   title: string
   excerpt: string
   category: string
-  author: { name: string }
+  author: { name: string } | null
   publishedAt: string
   readTime: number
   featured?: boolean
@@ -103,7 +103,7 @@ export default function ArticleCard({ article, size = 'normal' }: { article: Art
         </Link>
         <p className="text-slate-500 text-sm line-clamp-2 leading-relaxed mb-2">{article.excerpt}</p>
         <div className="flex items-center gap-2 text-xs text-slate-400 font-sans">
-          <span>{article.author.name}</span>
+          <span>{article.author?.name ?? 'Guest Author'}</span>
           <span>&middot;</span>
           <span>{formatDate(article.publishedAt)}</span>
         </div>

@@ -115,13 +115,19 @@ Rules:
       return NextResponse.json({ error: 'Failed to parse Claude response as JSON', raw: textBlock.text }, { status: 500 })
     }
 
-    const body = textToPortableText(parsed.body ?? '')
+    // Strip any leaked meta-labels from the body (e.g. "Meta: ..." or "**Body:**\n...")
+    const rawBody: string = (parsed.body ?? '').replace(/^(\*\*[^*]+\*\*|[A-Z][a-z]+(?: [A-Z][a-z]+)?):[ \t]*/m, '').trim()
+    const body = textToPortableText(rawBody)
+
+    // Strip any leaked AI meta-labels like "**Suggested Meta Description:** ..."
+    const rawExcerpt: string = parsed.excerpt ?? ''
+    const cleanExcerpt = rawExcerpt.replace(/^\*\*[^*]+\*\*:?\s*/i, '').trim()
 
     return NextResponse.json({
       title: parsed.title ?? '',
       slug: slugify(parsed.slug ?? parsed.title ?? ''),
       category: CATEGORIES.includes(parsed.category) ? parsed.category : (categoryHint ?? 'homebuying'),
-      excerpt: parsed.excerpt ?? '',
+      excerpt: cleanExcerpt,
       body,
     })
   } catch (err: any) {

@@ -152,8 +152,14 @@ export default async function ArticlePage({ params }: PageProps) {
           </h1>
           {post.excerpt && <p className="text-slate-300 font-sans text-lg leading-relaxed mb-8">{post.excerpt}</p>}
           <div className="flex items-center gap-4 pt-5 border-t border-white/10">
-            <div className="w-10 h-10 bg-slate-600 rounded-full flex-shrink-0 flex items-center justify-center" aria-hidden="true">
-              <svg className="w-5 h-5 text-slate-300" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+            <div className="w-10 h-10 rounded-full flex-shrink-0 overflow-hidden bg-slate-600">
+              {post.author?.avatar ? (
+                <Image src={post.author.avatar} alt={post.author.name ?? ''} width={40} height={40} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center" aria-hidden="true">
+                  <svg className="w-5 h-5 text-slate-300" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                </div>
+              )}
             </div>
             <div>
               <p className="text-white font-sans font-semibold text-sm">{post.author?.name ?? 'Guest Author'}</p>
@@ -199,8 +205,14 @@ export default async function ArticlePage({ params }: PageProps) {
 
             {/* Author bio */}
             <div className="mt-12 bg-slate-50 border border-slate-200 rounded-xl p-6 flex gap-5">
-              <div className="w-14 h-14 bg-slate-200 rounded-full flex-shrink-0 flex items-center justify-center" aria-hidden="true">
-                <svg className="w-7 h-7 text-slate-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+              <div className="w-14 h-14 rounded-full flex-shrink-0 overflow-hidden bg-slate-200">
+                {post.author?.avatar ? (
+                  <Image src={post.author.avatar} alt={post.author.name ?? ''} width={56} height={56} className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center" aria-hidden="true">
+                    <svg className="w-7 h-7 text-slate-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+                  </div>
+                )}
               </div>
               <div>
                 <p className="text-slate-500 text-xs font-sans uppercase tracking-wider mb-0.5">About the Author</p>
